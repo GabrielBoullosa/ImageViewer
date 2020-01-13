@@ -1,5 +1,7 @@
 package View;
 
-public class ImageLoader {
-    
+import Model.Image;
+
+public interface ImageLoader {
+    Image load();
 }
