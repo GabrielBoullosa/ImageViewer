@@ -1,4 +1,4 @@
-package imageviewer;
+package Main;
 
 public class Main {
 
