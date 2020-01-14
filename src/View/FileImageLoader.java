@@ -11,12 +11,11 @@ public class FileImageLoader implements ImageLoader {
         this.files = folder.listFiles(imageTypes());
     }
 
-    private FilenameFilter imageTypes() {
-        return new FilenameFilter(){
-
+    private FileFilter imageTypes() {
+        return new FileFilter(){
             @Override
-            public boolean accept(File dir, String name) {
-                return dir.getName().endsWith(".JPG");
+            public boolean accept(File pathname) {
+                return pathname.getName().endsWith(".JPG");
             }
         };
     }
