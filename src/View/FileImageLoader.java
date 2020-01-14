@@ -1,12 +1,57 @@
 package View;
 
 import Model.Image;
+import java.io.*;
 
 public class FileImageLoader implements ImageLoader {
 
-    @Override
-    public Image load() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private final File[] files;
+
+    public FileImageLoader(File folder) {
+        this.files = folder.listFiles(imageTypes());
+    }
+
+    private FilenameFilter imageTypes() {
+        return new FilenameFilter(){
+
+            @Override
+            public boolean accept(File dir, String name) {
+                return dir.getName().endsWith(".JPG");
+            }
+        };
     }
     
+    @Override
+    public Image load() {
+        return imageAt(0);
+    }
+
+    private Image imageAt(int i) {
+        return new Image(){
+
+            @Override
+            public String name() {
+                return files[i].getName();
+            }
+
+            @Override
+            public InputStream stream() {
+                try{
+                    return new BufferedInputStream(new FileInputStream(files[i]));
+                }catch(FileNotFoundException e){
+                    return null;
+                }
+            }
+
+            @Override
+            public Image next() {
+                return i == files.length -1 ? imageAt(0): imageAt(i+1);
+            }
+
+            @Override
+            public Image prev() {
+                return i == 0 ? imageAt(files.length-1): imageAt(i-1);
+            }
+        };
+    }
 }
