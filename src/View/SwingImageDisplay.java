@@ -24,8 +24,7 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
     @Override
     public void paint(Graphics g){
         if(currentImage == null) return;
-        g.clearRect(0, 0, 500, 500);
-        g.drawImage(imageOf(currentImage), 0, 0, this);
+        g.drawImage(imageOf(currentImage), 0, 0, 300, 300, this);
     }
     
     private BufferedImage imageOf(Image image){
